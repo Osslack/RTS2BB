@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "Convert a workout copied from RTS to a format for BB forums",
   "main": "index.js",
-  "bin": "./index.js",
+  "bin": "./bin.js",
   "files": [
+    "README.md",
+    "bin.js",
     "index.js"
   ],
   "scripts": {
-    "lint": "semistandard index.js --fix",
-    "test": "node index.js test"
+    "lint": "semistandard bin.js index.js --fix",
+    "test": "node bin.js test"
   },
   "repository": {
     "type": "git",
