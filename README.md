@@ -14,7 +14,7 @@ npm run test;
 
 # Usage
 
-Copy a RTS workout as described on the Exodus page and paste it into a file. Then call the script like `node index.js <file>`.
+Copy a RTS workout as described on the Exodus page and paste it into a file. Then call the script like `node index.js <file> [option]+ [--help]`.
 
 For example, given the following input:
 ```
