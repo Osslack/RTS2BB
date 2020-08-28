@@ -17,7 +17,7 @@ npm run test;
 You can either clone the project as above, or install it globally via `npm` like so: `npm i -g https://github.com/Osslack/RTS2BB.git` - this way you should
 be able to call the command `RTS2BB` from anywhere on your PC.
 
-Copy a RTS workout as described on the Exodus page and paste it into a file. Then call the script like `node index.js <file> [option]+ [--help]`.
+Copy a RTS workout as described on the Exodus page and paste it into a file. Then call the script like `node bin.js <file> [option]+ [--help]`.
 
 For example, given the following input:
 ```
