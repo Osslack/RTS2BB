@@ -3,7 +3,7 @@ Convert a workout copied from RTS to a format for BB forums. This is based on th
 
 I've tested this with node v14.8.0.
 
-# Setup
+# Setup for development
 
 ```
 git clone https://github.com/Osslack/RTS2BB.git;
@@ -13,6 +13,9 @@ npm run test;
 ```
 
 # Usage
+
+You can either clone the project as above, or install it globally via `npm` like so: `npm i -g https://github.com/Osslack/RTS2BB.git` - this way you should
+be able to call the command `RTS2BB` from anywhere on your PC.
 
 Copy a RTS workout as described on the Exodus page and paste it into a file. Then call the script like `node index.js <file> [option]+ [--help]`.
 
