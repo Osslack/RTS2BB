@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-const fs = require('fs');
 const moment = require('moment');
 
 /**
@@ -306,4 +305,3 @@ function format (input, options = {}) {
 }
 
 module.exports = format;
-
