@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Convert a workout copied from RTS to a format for BB forums",
   "main": "index.js",
+  "bin": "./index.js",
   "files": [
     "index.js"
   ],
