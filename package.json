@@ -1,0 +1,30 @@
+{
+  "name": "RTS2BB",
+  "version": "1.0.0",
+  "description": "Convert a workout copied from RTS to a format for BB forums",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "lint": "semistandard index.js --fix",
+    "test": "node index.js test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Osslack/RTS2BB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Osslack/RTS2BB/issues"
+  },
+  "homepage": "https://github.com/Osslack/RTS2BB#readme",
+  "dependencies": {
+    "moment": "^2.27.0"
+  },
+  "devDependencies": {
+    "semistandard": "^14.2.3"
+  }
+}
