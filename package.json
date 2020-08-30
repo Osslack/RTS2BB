@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "lint": "semistandard bin.js index.js --fix",
-    "test": "node bin.js test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "moment": "^2.27.0"
   },
   "devDependencies": {
+    "jest": "^26.4.2",
     "semistandard": "^14.2.3"
   }
 }
