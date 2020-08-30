@@ -10,7 +10,7 @@
     "index.js"
   ],
   "scripts": {
-    "lint": "semistandard bin.js index.js --fix",
+    "lint": "semistandard bin.js index.js test/*.js --fix",
     "test": "jest"
   },
   "repository": {

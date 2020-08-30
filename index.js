@@ -49,14 +49,14 @@ function renderSetWithoutWeight (reps, rpe, rpeMax) {
   return result;
 }
 
-function getPadding(actual, max){
+function getPadding (actual, max) {
   let result = '';
-  for(let i = 0; i < max - actual.length; i++){
+  for (let i = 0; i < max - actual.length; i++) {
     result += ' ';
   }
 
   return result;
-};
+}
 
 function renderSetWithWeight (weight, reps, rpe, weightMax, rpeMax) {
   let result = '';
@@ -75,15 +75,15 @@ function renderSetWithWeight (weight, reps, rpe, weightMax, rpeMax) {
   return result;
 }
 
-function setWithWeight(weight, reps, rpe){
-  return {weight, reps, rpe};
-};
-
-function setWithoutWeight(reps, rpe){
-  return {reps, rpe};
+function setWithWeight (weight, reps, rpe) {
+  return { weight, reps, rpe };
 }
 
-function parseSet(data){
+function setWithoutWeight (reps, rpe) {
+  return { reps, rpe };
+}
+
+function parseSet (data) {
   const set = {};
 
   if (data.length === 6) {
@@ -107,102 +107,58 @@ function parseSet(data){
   return set;
 }
 
-function getLengths(sets){
-  let maxPlannedWeightLength = -1, maxPlannedRPELength = -1, maxActualWeightLength = -1, maxActualRPELength = -1;
-  sets.forEach(({planned, actual}) => {
-    if(planned) {
-      const {weight, rpe} = planned;
-      if(weight && weight !== 'Null' && weight.length > maxPlannedWeightLength) maxPlannedWeightLength = weight.length;
-      if(rpe !== 'Null' && rpe.length > maxPlannedRPELength) maxPlannedRPELength = rpe.length;
+function getLengths (sets) {
+  let maxPlannedWeightLength = -1; let maxPlannedRPELength = -1; let maxActualWeightLength = -1; let maxActualRPELength = -1;
+  sets.forEach(({ planned, actual }) => {
+    if (planned) {
+      const { weight, rpe } = planned;
+      if (weight && weight !== 'Null' && weight.length > maxPlannedWeightLength) maxPlannedWeightLength = weight.length;
+      if (rpe !== 'Null' && rpe.length > maxPlannedRPELength) maxPlannedRPELength = rpe.length;
     }
 
-    if(actual) {
-      const {weight, rpe} = actual;
-      if(weight && weight !== 'Null' && weight.length > maxActualWeightLength) maxActualWeightLength = weight.length;
-      if(rpe !== 'Null' && rpe.length > maxActualRPELength) maxActualRPELength = rpe.length;
-
-    } 
+    if (actual) {
+      const { weight, rpe } = actual;
+      if (weight && weight !== 'Null' && weight.length > maxActualWeightLength) maxActualWeightLength = weight.length;
+      if (rpe !== 'Null' && rpe.length > maxActualRPELength) maxActualRPELength = rpe.length;
+    }
   });
 
-  return {maxPlannedWeightLength, maxPlannedRPELength, maxActualWeightLength, maxActualRPELength};
+  return { maxPlannedWeightLength, maxPlannedRPELength, maxActualWeightLength, maxActualRPELength };
 }
 
-function renderSet(maxPlannedWeightLength, maxPlannedRPELength, maxActualWeightLength, maxActualRPELength, ignore_intended_reps){
-  return function({planned, actual}){
+function renderSet (maxPlannedWeightLength, maxPlannedRPELength, maxActualWeightLength, maxActualRPELength, ignore_intended_reps) {
+  return function ({ planned, actual }) {
     let result = '';
-    let renderedPlanned, renderedActual;
+    let renderedPlanned;
 
-    if(planned){
-      if(planned.weight) renderedPlanned = renderSetWithWeight(planned.weight, planned.reps, planned.rpe, maxPlannedWeightLength, maxPlannedRPELength);
-      else if(planned.reps) renderedPlanned = renderSetWithoutWeight(planned.reps, planned.rpe, maxPlannedRPELength);
+    if (planned) {
+      if (planned.weight) renderedPlanned = renderSetWithWeight(planned.weight, planned.reps, planned.rpe, maxPlannedWeightLength, maxPlannedRPELength);
+      else if (planned.reps) renderedPlanned = renderSetWithoutWeight(planned.reps, planned.rpe, maxPlannedRPELength);
     }
 
     if (renderedPlanned && renderedPlanned !== '' && !ignore_intended_reps) {
       result += renderedPlanned + ' / ';
     }
 
-    if(actual){
-      if(!planned && maxPlannedWeightLength > -1 && maxPlannedRPELength  > -1){
+    if (actual) {
+      if (!planned && maxPlannedWeightLength > -1 && maxPlannedRPELength > -1) {
 
       }
 
-      if(actual.weight) result += renderSetWithWeight(actual.weight, actual.reps, actual.rpe, maxActualWeightLength, maxActualRPELength);
-      else if(actual.reps) result += renderSetWithoutWeight(actual.reps, actual.rpe, maxActualRPELength)
-    }
-
-    return result;
-  }
-};
-
-function renderSets(sets, ignore_intended_reps){
-  const {maxPlannedWeightLength, maxPlannedRPELength, maxActualWeightLength, maxActualRPELength} = getLengths(sets);
-
-  return sets.map(renderSet(maxPlannedWeightLength, maxPlannedRPELength, maxActualWeightLength, maxActualRPELength, ignore_intended_reps)).join('\n');
-}
-
-/**
- * Get the function to correctly render a single set
- *
- * Depending on the number of columns it is determined wether there was a target weight etc.
- *
- * @param {boolean} ignore_intended_reps Wether to ignore intended reps or not
- * @returns {String} The final, polished string representing the set
- */
-function getSetRenderFunction (ignore_intended_reps) {
-  return function (data) {
-    let result = '';
-    if (data.length === 6) {
-      // workout with weight with planned
-      const planned = renderSetWithWeight(...data.slice(0, 3));
-      const done = renderSetWithWeight(...data.slice(3));
-
-      if (planned !== '' && !ignore_intended_reps) {
-        result += planned + ' / ';
-      }
-
-      result += done;
-    } else if (data.length === 3) {
-      // workout with weight without planned
-      // Can this even ocurr? My workouts always had a planned
-      result = renderSetWithoutWeight(...data);
-    } else if (data.length === 4) {
-      // workout without weight with planned
-      const planned = renderSetWithoutWeight(...data.slice(0, 2));
-      const done = renderSetWithoutWeight(...data.slice(2));
-      if (planned !== '' && !ignore_intended_reps) {
-        result += planned + ' / ';
-      }
-
-      result += done;
-    } else if (data.length === 2) {
-      // workout without weight without planned
-      // Can this even ocurr? My workouts always had a planned
-      result = renderSetWithoutWeight(...data);
+      if (actual.weight) result += renderSetWithWeight(actual.weight, actual.reps, actual.rpe, maxActualWeightLength, maxActualRPELength);
+      else if (actual.reps) result += renderSetWithoutWeight(actual.reps, actual.rpe, maxActualRPELength);
     }
 
     return result;
   };
 }
+
+function renderSets (sets, ignore_intended_reps) {
+  const { maxPlannedWeightLength, maxPlannedRPELength, maxActualWeightLength, maxActualRPELength } = getLengths(sets);
+
+  return sets.map(renderSet(maxPlannedWeightLength, maxPlannedRPELength, maxActualWeightLength, maxActualRPELength, ignore_intended_reps)).join('\n');
+}
+
 function getDateAndWorkoutName (lines) {
   let date; let name;
   // Where to look for the workout name
